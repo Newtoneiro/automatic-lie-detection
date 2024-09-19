@@ -25,3 +25,6 @@ Celem pracy jest opracowanie systemu automatycznego rozpoznawania kłamstwa na p
         ├── modeling    <- scripts for generating models
     |--- environment.yml <- file with libraries and library versions for recreating the analysis environment
    
+## Użyteczne linki:
+
+VideoAnnotator -> https://github.com/roboflow/supervision/blob/0.22.0/examples/traffic_analysis/ultralytics_example.py
