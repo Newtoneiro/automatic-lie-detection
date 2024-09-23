@@ -8,7 +8,9 @@ RAW_DATA_DIR = os.path.join(
 )
 
 # flake8: noqa
-REAL_LIFE_DECEPTION_DETECTION_URL = "https://web.eecs.umich.edu/~mihalcea/downloads/RealLifeDeceptionDetection.2016.zip"
+REAL_LIFE_DECEPTION_DETECTION_URL = (
+    "https://web.eecs.umich.edu/~mihalcea/downloads/RealLifeDeceptionDetection.2016.zip"
+)
 
 AVAILABLE_DATASETS = {
     "REAL_LIFE_DECEPTION_DETECTION": REAL_LIFE_DECEPTION_DETECTION_URL,
@@ -16,7 +18,7 @@ AVAILABLE_DATASETS = {
 
 
 @click.command()
-@click.argument('dataset', nargs=1)
+@click.argument("dataset", nargs=1)
 def main(dataset):
     if dataset not in AVAILABLE_DATASETS.keys():
         print(f"Dataset {dataset} not available.")
@@ -28,7 +30,7 @@ def main(dataset):
         dload.save_unzip(
             AVAILABLE_DATASETS[dataset],
             extract_path=os.path.join(RAW_DATA_DIR, dataset.lower()),
-            delete_after=True
+            delete_after=True,
         )
         print(f"Dataset {dataset} downloaded.")
     except Exception as e:
