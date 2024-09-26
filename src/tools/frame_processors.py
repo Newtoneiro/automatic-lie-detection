@@ -95,8 +95,6 @@ class GoogleFaceLandmarkDetection(FrameProcessor):
         options = FaceLandmarkerOptions(
             base_options=BaseOptions(model_asset_path=model_path),
             running_mode=VisionRunningMode.IMAGE,
-            output_face_blendshapes=True,
-            output_facial_transformation_matrixes=True,
             num_faces=10,
             min_face_detection_confidence=0.2,
             min_face_presence_confidence=0.2,
