@@ -27,7 +27,7 @@ class SupervisionVertexProcessor(FrameProcessor):
     """
 
     DEFAULT_COLOR = sv.Color.WHITE
-    DEFAULT_RADIUS = 3
+    DEFAULT_RADIUS = 1
 
     def __init__(
         self,
@@ -75,7 +75,7 @@ class GoogleFaceLandmarkDetectionProcessor(FrameProcessor):
     """
 
     DEFAULT_COLOR = sv.Color.WHITE
-    DEFAULT_RADIUS = 3
+    DEFAULT_RADIUS = 1
 
     def __init__(
         self,
@@ -93,7 +93,9 @@ class GoogleFaceLandmarkDetectionProcessor(FrameProcessor):
         VisionRunningMode = mp.tasks.vision.RunningMode
 
         options = FaceLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=model_path, delegate=BaseOptions.Delegate.CPU),
+            base_options=BaseOptions(
+                model_asset_path=model_path, delegate=BaseOptions.Delegate.CPU
+            ),
             running_mode=VisionRunningMode.IMAGE,
             num_faces=10,
             min_face_detection_confidence=0.2,

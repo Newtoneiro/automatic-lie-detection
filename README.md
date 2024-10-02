@@ -30,3 +30,4 @@ Celem pracy jest opracowanie systemu automatycznego rozpoznawania kłamstwa na p
 VideoAnnotator -> https://github.com/roboflow/supervision/blob/0.22.0/examples/traffic_analysis/ultralytics_example.py
 
 GOOGLE FACE MARKERER -> https://storage.googleapis.com/mediapipe-assets/MediaPipe%20BlazeFace%20Model%20Card%20(Short%20Range).pdf
+                     -> https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf

@@ -1,13 +1,37 @@
+from typing import Optional
 import numpy as np
 import cv2
 import supervision as sv
-from tools.frame_processors import FrameProcessor
+from tools.frame_processors import (
+    FrameProcessor,
+)
+from tools.frame_preprocessors import (
+    FramePreprocessor,
+    EmptyFramePreprocessor,
+)
 from tqdm import tqdm
 
 
 class DataProcessor:
-    def __init__(self, frame_processor: FrameProcessor) -> None:
+    def __init__(
+        self,
+        frame_processor: FrameProcessor,
+        frame_preprocessor: FramePreprocessor = None,
+    ) -> None:
         self._frame_processor = frame_processor
+        self._frame_preprocessor = frame_preprocessor or EmptyFramePreprocessor()
+
+    def _preprocess_frame(self, frame: np.ndarray) -> Optional[np.ndarray]:
+        """
+        Preprocess a single frame by extracting faces.
+
+        Args:
+            frame (np.ndarray): The input frame to process.
+
+        Returns:
+            Optional(np.ndarray): The processed frame or None if preprocessed frame is bad.
+        """
+        return self._frame_preprocessor.preprocess(frame)
 
     def _process_frame(self, frame: np.ndarray) -> np.ndarray:
         """
@@ -22,6 +46,22 @@ class DataProcessor:
         """
         return self._frame_processor.process(frame)
 
+    def _handle_frame(self, frame: np.ndarray) -> Optional[np.ndarray]:
+        """
+        Handle a single frame by preprocessing and processing it.
+
+        Args:
+            frame (np.ndarray): The input frame to handle.
+
+        Returns:
+            (np.ndarray): The handled frame.
+        """
+        preprocessed_frame = self._preprocess_frame(frame)
+        if preprocessed_frame is not None:
+            return self._process_frame(preprocessed_frame)
+
+        return None
+
     def _process_and_save_video(self, source_path: str, target_path: str) -> None:
         """
         Process a video by detecting facial landmarks and annotating edges.
@@ -35,7 +75,10 @@ class DataProcessor:
 
         with sv.VideoSink(target_path, video_info) as sink:
             for frame in tqdm(frame_generator, total=video_info.total_frames):
-                annotated_frame = self._process_frame(frame)
+                annotated_frame = self._handle_frame(frame)
+                if annotated_frame is None:
+                    continue
+
                 sink.write_frame(annotated_frame)
 
     def _process_and_display_video(self, source_path: str) -> None:
@@ -49,7 +92,10 @@ class DataProcessor:
         frame_generator = sv.get_video_frames_generator(source_path)
 
         for frame in tqdm(frame_generator, total=video_info.total_frames):
-            annotated_frame = self._process_frame(frame)
+            annotated_frame = self._handle_frame(frame)
+            if annotated_frame is None:
+                continue
+
             cv2.imshow("Processed Video", annotated_frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
