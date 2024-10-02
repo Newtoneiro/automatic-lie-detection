@@ -68,10 +68,10 @@ class SupervisionEdgesProcessor(FrameProcessor):
         return self._annotator.annotate(frame, key_points)
 
 
-class GoogleFaceLandmarkDetection(FrameProcessor):
+class GoogleFaceLandmarkDetectionProcessor(FrameProcessor):
     """
     A frame processor that detects facial landmarks using Google's Face Landmark model
-    and annotates them with edges.
+    and annotates them with vertices.
     """
 
     DEFAULT_COLOR = sv.Color.WHITE
@@ -93,7 +93,7 @@ class GoogleFaceLandmarkDetection(FrameProcessor):
         VisionRunningMode = mp.tasks.vision.RunningMode
 
         options = FaceLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=model_path),
+            base_options=BaseOptions(model_asset_path=model_path, delegate=BaseOptions.Delegate.CPU),
             running_mode=VisionRunningMode.IMAGE,
             num_faces=10,
             min_face_detection_confidence=0.2,
