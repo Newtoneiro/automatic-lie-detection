@@ -6,3 +6,20 @@
 - W jakim stopniu mogę korzystać z zewnętrznych rozwiązań?
 - Czy jakiś frontend do demnostracji / czy wystarczy działający algorytm i dokumentacja?
 - Raczej będę używać templatki cookiecuttera.
+
+
+### 10/17
+
+- co poprawić w preprocesingu / processingu klatek
+Face frontalization -> oczy zawsze w tym samym miejscu | poszukać prac związanych z tą normalizacją i znaleźć najnowszą / najlepszą
+
+3 różne podejścia - przesunięcia punktów względem nosa / pozycje punktów ze znormalizowanymi oczami / czestotliwość mrugnięć (wykrywanie mrugnięć)
+
+- jak bardzo skupiać się na porównaniach rzeczy, tak jak w inżynierce?
+nie bardzo, liczy sie podejscie algorytmiczne, nie techniczne
+
+- czy to już czas na wybór modelu - najwyrazniej nie
+
+- czy dołączamy audio do modelu?
+skupic sie na video, audio jest cieżkie.
+  

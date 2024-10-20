@@ -45,6 +45,31 @@ class SupervisionVertexProcessor(FrameProcessor):
         return self._annotator.annotate(frame, key_points)
 
 
+class SupervisionVertexProcessorWithFrontalization(FrameProcessor):
+    """
+    A frame processor that detects facial landmarks using Ultralytics FaceMesh
+    and annotates them with vertices.
+    """
+
+    DEFAULT_COLOR = sv.Color.WHITE
+    DEFAULT_RADIUS = 1
+
+    def __init__(
+        self,
+        vertex_color: sv.Color = DEFAULT_COLOR,
+        vertex_radius: int = DEFAULT_RADIUS,
+    ):
+        self._model = mp.solutions.face_mesh.FaceMesh()
+        self._annotator = sv.VertexAnnotator(color=vertex_color, radius=vertex_radius)
+
+    def process(self, frame: np.ndarray) -> np.ndarray:
+        resolution_wh = (frame.shape[1], frame.shape[0])
+        processed_frame = self._model.process(frame)
+        key_points = sv.KeyPoints.from_mediapipe(processed_frame, resolution_wh)
+
+        return self._annotator.annotate(frame, key_points)
+
+
 class SupervisionEdgesProcessor(FrameProcessor):
     """
     A frame processor that detects facial landmarks using Ultralytics FaceMesh
@@ -91,16 +116,15 @@ class GoogleFaceLandmarkDetectionProcessor(FrameProcessor):
         FaceLandmarker = mp.tasks.vision.FaceLandmarker
         FaceLandmarkerOptions = mp.tasks.vision.FaceLandmarkerOptions
         VisionRunningMode = mp.tasks.vision.RunningMode
-
         options = FaceLandmarkerOptions(
             base_options=BaseOptions(
                 model_asset_path=model_path, delegate=BaseOptions.Delegate.CPU
             ),
             running_mode=VisionRunningMode.IMAGE,
             num_faces=10,
-            min_face_detection_confidence=0.2,
-            min_face_presence_confidence=0.2,
-            min_tracking_confidence=0.2,
+            min_face_detection_confidence=0.4,
+            min_face_presence_confidence=0.4,
+            min_tracking_confidence=0.4,
         )
 
         return FaceLandmarker.create_from_options(options)
