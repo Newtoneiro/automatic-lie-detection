@@ -31,3 +31,4 @@ VideoAnnotator -> https://github.com/roboflow/supervision/blob/0.22.0/examples/t
 
 GOOGLE FACE MARKERER -> https://storage.googleapis.com/mediapipe-assets/MediaPipe%20BlazeFace%20Model%20Card%20(Short%20Range).pdf
                      -> https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf
+                     -> https://github.com/google-ai-edge/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png
