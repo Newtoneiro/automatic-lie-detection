@@ -8,6 +8,7 @@ from tools.frame_preprocessors import (
 )
 from tools.frame_processors import (
     GoogleFaceLandmarkDetectionProcessor,
+    SupervisionVertexProcessorWithFrontalization,
     SupervisionVertexProcessor,
     SupervisionEdgesProcessor,
     FrameProcessor,

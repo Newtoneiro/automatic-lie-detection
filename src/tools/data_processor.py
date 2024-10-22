@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 import numpy as np
 import cv2
 import supervision as sv
@@ -71,6 +71,11 @@ class DataProcessor:
             target_path (str): The path to the target video.
         """
         video_info = sv.VideoInfo.from_video_path(source_path)
+        forced_out_size = self._get_forced_out_size()
+        if forced_out_size is not None:
+            video_info.width = forced_out_size[0]
+            video_info.height = forced_out_size[1]
+
         frame_generator = sv.get_video_frames_generator(source_path)
 
         with sv.VideoSink(target_path, video_info) as sink:
@@ -80,6 +85,23 @@ class DataProcessor:
                     continue
 
                 sink.write_frame(annotated_frame)
+
+    def _get_forced_out_size(self) -> Optional[Tuple[int, int]]:
+        """
+        Get the forced out size forced by processor and preprocessors.
+        Processor out size has higher priority.
+        Returns None, if processor doesnt force out size.
+        Returns:
+            Optional[Tuple[int, int]]: The output size if available, otherwise None.
+        """
+        preprocessor_out_size = self._frame_preprocessor.forced_out_size()
+        processor_out_size = self._frame_processor.forced_out_size()
+
+        return (
+            processor_out_size
+            if processor_out_size is not None
+            else preprocessor_out_size
+        )
 
     def _process_and_display_video(self, source_path: str) -> None:
         """
