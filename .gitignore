@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*/__pycache__/*
 *.py[cod]
 
 # C and Fortran extensions
@@ -101,7 +102,7 @@ bin/
 /data/raw
 
 # exclude external models from source control
-/src/external/
+# /src/external/
 
 # exclude the frontalization_models
 /src/models/frontalization_models/
