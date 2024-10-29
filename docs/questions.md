@@ -22,4 +22,11 @@ nie bardzo, liczy sie podejscie algorytmiczne, nie techniczne
 
 - czy dołączamy audio do modelu?
 skupic sie na video, audio jest cieżkie.
+
+### 24/10
+
+- filmik rozłożyć na klatki, wziąć pierwsze x klatek, zrobić oś czasu i namalować wykres zależności (y - np. odległość oczu od nosa , x -klatka)
+i na jego podstawie zweryfikować korelacje - podczas uśmiechu odleglosc kacików ust się zwieksza
+
+- znormalizować twarz jako teksturę (frontalizacja obrazka, nie tylko punktów)
   
