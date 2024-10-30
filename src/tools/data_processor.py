@@ -1,15 +1,12 @@
+from __future__ import annotations  # Needed for forward references in type hints (Python 3.7+)
 from typing import Optional, Tuple
 import numpy as np
 import cv2
 import supervision as sv
-from tools.frame_processors import (
-    FrameProcessor,
-)
-from tools.frame_preprocessors import (
-    FramePreprocessor,
-    EmptyFramePreprocessor,
-)
 from tqdm import tqdm
+
+from tools.frame_preprocessors import FramePreprocessor, EmptyFramePreprocessor
+from tools.frame_processors import FrameProcessor
 
 
 class DataProcessor:
@@ -18,8 +15,8 @@ class DataProcessor:
         frame_processor: FrameProcessor,
         frame_preprocessor: FramePreprocessor = None,
     ) -> None:
-        self._frame_processor = frame_processor
-        self._frame_preprocessor = frame_preprocessor or EmptyFramePreprocessor()
+        self._frame_processor: FrameProcessor = frame_processor
+        self._frame_preprocessor: FramePreprocessor = frame_preprocessor or EmptyFramePreprocessor()
 
     def _preprocess_frame(self, frame: np.ndarray) -> Optional[np.ndarray]:
         """
