@@ -1,5 +1,7 @@
-from __future__ import annotations  # Needed for forward references in type hints (Python 3.7+)
-from typing import Optional, Tuple
+from __future__ import (
+    annotations,
+)  # Needed for forward references in type hints (Python 3.7+)
+from typing import List, Optional, Tuple
 import numpy as np
 import cv2
 import supervision as sv
@@ -13,14 +15,16 @@ class DataProcessor:
     def __init__(
         self,
         frame_processor: FrameProcessor,
-        frame_preprocessor: FramePreprocessor = None,
+        frame_preprocessors: List[FramePreprocessor] = None,
     ) -> None:
         self._frame_processor: FrameProcessor = frame_processor
-        self._frame_preprocessor: FramePreprocessor = frame_preprocessor or EmptyFramePreprocessor()
+        self._frame_preprocessors: FramePreprocessor = frame_preprocessors or [
+            EmptyFramePreprocessor()
+        ]
 
     def _preprocess_frame(self, frame: np.ndarray) -> Optional[np.ndarray]:
         """
-        Preprocess a single frame by extracting faces.
+        Preprocess a single frame by the preprocessors used in sequence.
 
         Args:
             frame (np.ndarray): The input frame to process.
@@ -28,7 +32,12 @@ class DataProcessor:
         Returns:
             Optional(np.ndarray): The processed frame or None if preprocessed frame is bad.
         """
-        return self._frame_preprocessor.preprocess(frame)
+        for frame_preprocessor in self._frame_preprocessors:
+            frame = frame_preprocessor.preprocess(frame)
+            if frame is None:
+                return None
+
+        return frame
 
     def _process_frame(self, frame: np.ndarray) -> np.ndarray:
         """
@@ -91,7 +100,7 @@ class DataProcessor:
         Returns:
             Optional[Tuple[int, int]]: The output size if available, otherwise None.
         """
-        preprocessor_out_size = self._frame_preprocessor.forced_out_size()
+        preprocessor_out_size = self._frame_preprocessors[-1].forced_out_size()
         processor_out_size = self._frame_processor.forced_out_size()
 
         return (
