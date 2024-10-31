@@ -93,7 +93,7 @@ def frontalize(do_calculate_symmetry, img, proj_matrix, ref_U, eyemask):
     midcolumn = int(np.round(ref_U.shape[1] / 2))
     sumaccs = synth_frontal_acc.sum(axis=0)
     sum_left = sumaccs[0:midcolumn].sum()
-    sum_right = sumaccs[midcolumn + 1 :].sum()
+    sum_right = sumaccs[midcolumn + 1:].sum()
     sum_diff = sum_left - sum_right
 
     if np.abs(sum_diff) > ACC_CONST:  # one side is ocluded
