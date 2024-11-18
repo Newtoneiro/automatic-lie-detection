@@ -100,7 +100,9 @@ class DataProcessor:
         Returns:
             Optional[Tuple[int, int]]: The output size if available, otherwise None.
         """
-        preprocessor_out_size = self._frame_preprocessors[0].forced_out_size()  # TODO: Fix the way its calculated
+        preprocessor_out_size = self._frame_preprocessors[
+            0
+        ].forced_out_size()  # TODO: Fix the way its calculated
         processor_out_size = self._frame_processor.forced_out_size()
 
         return (

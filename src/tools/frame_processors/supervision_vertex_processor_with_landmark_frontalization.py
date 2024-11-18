@@ -54,7 +54,6 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
         Returns:
             np.ndarray: A numpy array containing the x, y, and z coordinates of the face landmarks.
         """
-
         face_landmarks = [
             face_landmark.landmark
             for face_landmark in processed_frame.multi_face_landmarks
