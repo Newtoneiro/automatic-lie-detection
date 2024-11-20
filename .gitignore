@@ -101,6 +101,9 @@ bin/
 /data/processed
 /data/raw
 
+/notebooks/sandboxes/data/expressions/
+/notebooks/sandboxes/data/test_videos/
+
 # exclude external models from source control
 /src/external/
 
