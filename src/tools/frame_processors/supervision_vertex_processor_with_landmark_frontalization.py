@@ -45,7 +45,7 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
     def forced_out_size(self) -> Optional[Tuple[int, int]]:
         return self._out_size
 
-    def _get_xyz_from_processed_frame(self, processed_frame: NamedTuple) -> np.ndarray:
+    def _get_xyz_from_processed_frame(self, processed_frame: NamedTuple) -> Optional[np.ndarray]:
         """
         Extracts the x, y, and z coordinates from the processed frame's face landmarks.
         Args:
@@ -54,6 +54,9 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
         Returns:
             np.ndarray: A numpy array containing the x, y, and z coordinates of the face landmarks.
         """
+        if not processed_frame.multi_face_landmarks:
+            return None
+
         face_landmarks = [
             face_landmark.landmark
             for face_landmark in processed_frame.multi_face_landmarks
@@ -155,9 +158,12 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
 
         return display_frame
 
-    def process(self, frame: np.ndarray) -> np.ndarray:
+    def process(self, frame: np.ndarray) -> Optional[np.ndarray]:
         processed_frame = self._model.process(frame)
         image_to_frontalize_xyz = self._get_xyz_from_processed_frame(processed_frame)
+        if image_to_frontalize_xyz is None:
+            return None
+
         frontalized_keypoints = self._procrustes_analysis(
             image_to_frontalize_xyz[0], self._reference_points[0]
         )

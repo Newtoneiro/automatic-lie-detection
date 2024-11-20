@@ -39,7 +39,7 @@ class DataProcessor:
 
         return frame
 
-    def _process_frame(self, frame: np.ndarray) -> np.ndarray:
+    def _process_frame(self, frame: np.ndarray) -> Optional[np.ndarray]:
         """
         Process a single frame by detecting facial landmarks and annotating
         edges.

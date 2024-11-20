@@ -1,3 +1,4 @@
+from typing import Optional
 import numpy as np
 import mediapipe as mp
 import supervision as sv
@@ -19,7 +20,7 @@ class SupervisionEdgesProcessor(FrameProcessor):
         self._model = mp.solutions.face_mesh.FaceMesh()
         self._annotator = sv.EdgeAnnotator(color=edges_color, thickness=thickness)
 
-    def process(self, frame: np.ndarray) -> np.ndarray:
+    def process(self, frame: np.ndarray) -> Optional[np.ndarray]:
         resolution_wh = (frame.shape[1], frame.shape[0])
         processed_frame = self._model.process(frame)
         key_points = sv.KeyPoints.from_mediapipe(processed_frame, resolution_wh)

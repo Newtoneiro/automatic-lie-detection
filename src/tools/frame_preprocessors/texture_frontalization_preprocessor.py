@@ -245,7 +245,7 @@ def extract_frustum(camera_matrix, rmat, tvec, width, height):
     frustum[3, :] = clip[3, :] - clip[1, :]
     # /* Normalize the result */
     v = frustum[3, :3]
-    t = np.sqrt(np.sum(np.multiply(v, v)))
+    t = np.sqrt(np.sum(np.multiply(v, v))) 
     frustum[3, :] = frustum[3, :] / t
 
     # /* Extract the FAR plane */

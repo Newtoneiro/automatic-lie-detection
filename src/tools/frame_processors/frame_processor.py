@@ -15,14 +15,15 @@ class FrameProcessor(ABC):
         return None
 
     @abstractmethod
-    def process(self, frame: np.ndarray) -> np.ndarray:
+    def process(self, frame: np.ndarray) -> Optional[np.ndarray]:
         """
-        Process a single frame and return the processed frame.
+        Process a single frame and return the processed frame. Returns
+        None if something went wrong
 
         Args:
             frame (np.ndarray): The input frame to process.
 
         Returns:
-            (np.ndarray): The processed frame.
+            Optional[np.ndarray]: The processed frame if available, otherwise None.
         """
         pass

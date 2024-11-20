@@ -1,3 +1,4 @@
+from typing import Optional
 import cv2
 import numpy as np
 import mediapipe as mp
@@ -41,7 +42,7 @@ class GoogleFaceLandmarkDetectionProcessor(FrameProcessor):
 
         return FaceLandmarker.create_from_options(options)
 
-    def process(self, frame: np.ndarray) -> np.ndarray:
+    def process(self, frame: np.ndarray) -> Optional[np.ndarray]:
         resolution_wh = (frame.shape[1], frame.shape[0])
         image = mp.Image(
             image_format=mp.ImageFormat.SRGB,
