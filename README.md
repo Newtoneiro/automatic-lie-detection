@@ -34,3 +34,5 @@ GOOGLE FACE MARKERER -> https://storage.googleapis.com/mediapipe-assets/MediaPip
                      -> https://github.com/google-ai-edge/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png
 
 EKSPRESJE -> https://pixabay.com/videos/search/facial%20expressions%20smile/
+
+DATASET EMOCJI -> https://zenodo.org/records/1188976 | 1) Neutral, 2) Calm 3) Happy , 4) Sad, 5) Angry, 6) Fearful, 7) Disgust and 8) Surprised.

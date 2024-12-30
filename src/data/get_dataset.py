@@ -1,7 +1,7 @@
 import click
 import dload
 import os
-import pprint
+from pprint import pprint
 
 RAW_DATA_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "raw"
@@ -11,9 +11,13 @@ RAW_DATA_DIR = os.path.join(
 REAL_LIFE_DECEPTION_DETECTION_URL = (
     "https://web.eecs.umich.edu/~mihalcea/downloads/RealLifeDeceptionDetection.2016.zip"
 )
+RAVDESS = (
+    "https://www.kaggle.com/api/v1/datasets/download/adrivg/ravdess-emotional-speech-video"
+)
 
 AVAILABLE_DATASETS = {
     "REAL_LIFE_DECEPTION_DETECTION": REAL_LIFE_DECEPTION_DETECTION_URL,
+    "RAVDESS": RAVDESS,
 }
 
 
@@ -24,7 +28,7 @@ def main(dataset):
         print(f"Dataset {dataset} not available.")
         pprint(f"Available datasets: {list(AVAILABLE_DATASETS.keys())}")
         return
-
+    
     print(f"Downloading dataset {dataset}...")
     try:
         dload.save_unzip(

@@ -29,4 +29,9 @@ skupic sie na video, audio jest cieżkie.
 i na jego podstawie zweryfikować korelacje - podczas uśmiechu odleglosc kacików ust się zwieksza
 
 - znormalizować twarz jako teksturę (frontalizacja obrazka, nie tylko punktów)
+
+
+## 28/11
+- Udowodnić, że na bazie danych dobrze działa wykrywania emocji. Jeżeli to nie działa, to coś jest nie tak z pipelinem przetwarzania punktów. Jeżeli działa to może 
+  będzie działać tez dla detekcji kłamstw
   
