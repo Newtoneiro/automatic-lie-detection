@@ -68,6 +68,27 @@ class DataProcessor:
 
         return None
 
+    def _process_and_save_data(self, source_path: str, target_path: str) -> None:
+        """
+        Process a video by detecting facial landmarks and annotating edges.
+        Save the output data from every frame to target_path.
+
+        Args:
+            source_path (str): The path to the source video.
+            target_path (str): The path to the target output.
+        """
+        frame_generator = sv.get_video_frames_generator(source_path)
+
+        output = []
+
+        for frame in frame_generator:
+            frame_out = self._handle_frame(frame)
+            if frame_out is not None:
+                output.append(frame_out)
+
+        output = np.array(output, dtype=object)
+        np.save(target_path, output)
+
     def _process_and_save_video(self, source_path: str, target_path: str) -> None:
         """
         Process a video by detecting facial landmarks and annotating edges.
@@ -130,6 +151,20 @@ class DataProcessor:
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
         cv2.destroyAllWindows()
+
+    def process_data(
+        self,
+        source_path: str,
+        target_path: str,
+    ):
+        """
+        Process a video using preprocessors and procesors and save the output data.
+
+        Args:
+            source_path (str): The path to the source video.
+            target_path (str): The path to the target output.
+        """
+        self._process_and_save_data(source_path, target_path)
 
     def process_video(
         self,

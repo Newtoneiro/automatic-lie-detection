@@ -18,6 +18,7 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
     DEFAULT_OUT_LANDMARK_RADIUS = 2
     DEFAULT_OUT_LANDMARK_COLOR = (255, 255, 255)
     DEFAULT_OUT_LANDMARK_THICKNESS = -1
+    DEFAULT_DO_MAKE_FACE_MESH = True
 
     def __init__(
         self,
@@ -28,12 +29,14 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
         out_landmark_radius: int = DEFAULT_OUT_LANDMARK_RADIUS,
         out_landmark_color: Tuple[int, int, int] = DEFAULT_OUT_LANDMARK_COLOR,
         out_landmark_thickness: int = DEFAULT_OUT_LANDMARK_THICKNESS,
+        do_make_face_mesh: bool = DEFAULT_DO_MAKE_FACE_MESH,
     ):
         self._reference_points = np.load(reference_points_path)
         self._out_size = out_size
         self._out_landmark_radius = out_landmark_radius
         self._out_landmark_color = out_landmark_color
         self._out_landmark_thickness = out_landmark_thickness
+        self._do_make_face_mesh = do_make_face_mesh
 
         self._model = mp.solutions.face_mesh.FaceMesh(
             static_image_mode=False,
@@ -169,4 +172,7 @@ class SupervisionVertexProcessorWithLandmarkFrontalization(FrameProcessor):
         )
         frontalized_keypoints = self._get_xy_from_xyz(frontalized_keypoints)
 
-        return self._make_face_mesh(frontalized_keypoints)
+        if self._do_make_face_mesh:
+            return self._make_face_mesh(frontalized_keypoints)
+        else:
+            return frontalized_keypoints
