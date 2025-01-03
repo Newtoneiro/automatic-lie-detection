@@ -110,5 +110,8 @@ bin/
 # exclude the frontalization_models
 /src/models/frontalization_models/
 
+# exclue the runs for tensorboard
+/models/runs/
+
 # copyrighted docs
 /docs/_copyright*
