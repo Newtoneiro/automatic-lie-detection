@@ -104,9 +104,6 @@ bin/
 /notebooks/sandboxes/data/expressions/
 /notebooks/sandboxes/data/test_videos/
 
-# exclude external models from source control
-/src/external/
-
 # exclude the frontalization_models
 /src/models/frontalization_models/
 
