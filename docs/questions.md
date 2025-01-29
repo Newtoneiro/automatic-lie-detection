@@ -34,4 +34,12 @@ i na jego podstawie zweryfikować korelacje - podczas uśmiechu odleglosc kacik�
 ## 28/11
 - Udowodnić, że na bazie danych dobrze działa wykrywania emocji. Jeżeli to nie działa, to coś jest nie tak z pipelinem przetwarzania punktów. Jeżeli działa to może 
   będzie działać tez dla detekcji kłamstw
-  
+
+
+## 9/01
+- poprawić skuteczność modelu na emocjach:
+  - wybór konkretnych punktów
+  - redukcja wymiarowości (klasyczny algorytm + sieć konwolucyjna)
+
+- podsumowanie pracy w jednym dokumencie
+- założyć w końcu overleafa
