@@ -39,7 +39,9 @@ i na jego podstawie zweryfikować korelacje - podczas uśmiechu odleglosc kacik�
 ## 9/01
 - poprawić skuteczność modelu na emocjach:
   - wybór konkretnych punktów
-  - redukcja wymiarowości (klasyczny algorytm + sieć konwolucyjna)
+  - redukcja wymiarowości (klasyczny algorytm + sieć konwolucyjna) https://project.inria.fr/aaltd20/files/2020/08/AALTD_20_paper_Kathirgamanathan.pdf
+  - selekcja cech dla szeregów czasowych
+  - może wybrać punkty z literatury
 
-- podsumowanie pracy w jednym dokumencie
+- [x] podsumowanie pracy w jednym dokumencie
 - założyć w końcu overleafa
