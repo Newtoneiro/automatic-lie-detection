@@ -40,8 +40,8 @@ i na jego podstawie zweryfikować korelacje - podczas uśmiechu odleglosc kacik�
 - poprawić skuteczność modelu na emocjach:
   - wybór konkretnych punktów
   - redukcja wymiarowości (klasyczny algorytm + sieć konwolucyjna) https://project.inria.fr/aaltd20/files/2020/08/AALTD_20_paper_Kathirgamanathan.pdf
-  - selekcja cech dla szeregów czasowych
+  - selekcja cech dla szeregów czasowych [zamiast punktów czasowych można policzyć odległość od nosa | odległość też można znormalizować przez szerokość twarzy (np. odległość między oczami) i znormalizować szereg czasowy przez odległośc między 1 a drugą klatką (Intuicja jest taka, że usmiech a jest inny niż uśmiech b i normalizacja względem intensywności przesunieć)]
   - może wybrać punkty z literatury
 
 - [x] podsumowanie pracy w jednym dokumencie
-- założyć w końcu overleafa
+- [x] założyć w końcu overleafa
