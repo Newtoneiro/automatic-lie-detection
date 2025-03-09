@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Button
 
-SAVE_FILE_PATH = os.path.join('..', 'data', 'reference_points', 'manualy_selected_points.npy')
-REFERENCE_POINTS_PATH = os.path.join('..', 'data', 'reference_points', 'key_points_xyz.npy')
+SAVE_FILE_PATH = os.path.join('..', '..', 'data', 'reference_points', 'manualy_selected_points.npy')
+REFERENCE_POINTS_PATH = os.path.join('..', '..', 'data', 'reference_points', 'key_points_xyz.npy')
 
 points = np.load(REFERENCE_POINTS_PATH)[0]
 selected_indices = np.load(SAVE_FILE_PATH) if os.path.exists(SAVE_FILE_PATH) else []
