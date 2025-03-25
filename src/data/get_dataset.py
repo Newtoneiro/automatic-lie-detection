@@ -8,6 +8,9 @@ RAW_DATA_DIR = os.path.join(
 )
 
 # flake8: noqa
+MIAMI_DECEPTION = (
+    "https://sc.lib.miamioh.edu/bitstream/handle/2374.MIA/6067/MU3D-Package.zip?sequence=7&isAllowed=y"
+)
 REAL_LIFE_DECEPTION_DETECTION_URL = (
     "https://web.eecs.umich.edu/~mihalcea/downloads/RealLifeDeceptionDetection.2016.zip"
 )
@@ -16,6 +19,7 @@ RAVDESS = (
 )
 
 AVAILABLE_DATASETS = {
+    "MIAMI_DECEPTION": MIAMI_DECEPTION,
     "REAL_LIFE_DECEPTION_DETECTION": REAL_LIFE_DECEPTION_DETECTION_URL,
     "RAVDESS": RAVDESS,
 }
