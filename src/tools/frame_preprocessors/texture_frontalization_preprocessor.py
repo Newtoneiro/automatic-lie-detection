@@ -89,6 +89,9 @@ def frontalize(do_calculate_symmetry, img, proj_matrix, ref_U, eyemask):
     frontal_raw[badind, :] = 0
     frontal_raw = frontal_raw.reshape((320, 320, 3), order="F")
 
+    if not do_calculate_symmetry:
+        return frontal_raw.copy(order="C").astype(np.uint8)
+
     # which side has more occlusions?
     midcolumn = int(np.round(ref_U.shape[1] / 2))
     sumaccs = synth_frontal_acc.sum(axis=0)
@@ -137,14 +140,14 @@ def frontalize(do_calculate_symmetry, img, proj_matrix, ref_U, eyemask):
         )
         frontal_raw[frontal_raw > 255] = 255
         frontal_raw[frontal_raw < 0] = 0
-        frontal_raw = frontal_raw.astype("uint8")
+        frontal_raw = frontal_raw.astype(np.uint8)
         frontal_sym[frontal_sym > 255] = 255
         frontal_sym[frontal_sym < 0] = 0
-        frontal_sym = frontal_sym.astype("uint8")
+        frontal_sym = frontal_sym.astype(np.uint8)
     else:  # both sides are occluded pretty much to the same extent -- do not use symmetry
-        frontal_sym = frontal_raw
-    frontal_raw = frontal_raw.copy(order="C")
-    return frontal_sym if do_calculate_symmetry else frontal_raw
+        frontal_sym = frontal_raw.astype(np.uint8)
+
+    return frontal_sym.astype(np.uint8)
 
 
 def estimate_camera(model3D, fidu_XY):
