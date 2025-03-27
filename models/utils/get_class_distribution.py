@@ -2,4 +2,7 @@ from collections import Counter
 
 
 def get_class_distribution(labels):
-    return dict(sorted(Counter((label.argmax().item() for label in labels)).items(), key=lambda i: i[0]))
+    print("===> Class distribution <===")
+    for label, count in sorted(Counter(labels).items(), key=lambda i: i[0]):
+        print(f"{label}: {count}")
+    print("=============><=============")
