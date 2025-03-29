@@ -3,6 +3,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 EPOCHS = 300
 BATCH_SIZE = 32
+PREDICTION_TRESHOLD = 0.5
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -76,7 +77,8 @@ def train_torch_model_multiclass(model, criterion, optimizer, X_train, y_train,
 
 
 def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
-                             X_val, y_val, *, writer=None, batch_size=BATCH_SIZE, epochs=EPOCHS):
+                             X_val, y_val, *, writer=None, batch_size=BATCH_SIZE,
+                             epochs=EPOCHS, prediction_treshold=PREDICTION_TRESHOLD):
     model = model.to(device)
 
     train_dataset = TensorDataset(X_train, y_train)
@@ -107,7 +109,7 @@ def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
 
             train_loss += loss.item()
 
-            predicted = (torch.sigmoid(outputs) > 0.5).long()
+            predicted = (torch.sigmoid(outputs) > prediction_treshold).long()
             correct += (predicted == y_batch.long()).sum().item()
             total += y_batch.size(0)
 
@@ -127,7 +129,7 @@ def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
                 loss = criterion(outputs, y_batch)
 
                 val_loss += loss.item()
-                predicted = (torch.sigmoid(outputs) > 0.5).long()
+                predicted = (torch.sigmoid(outputs) > prediction_treshold).long()
                 correct += (predicted == y_batch.long()).sum().item()
                 total += y_batch.size(0)
 
@@ -146,7 +148,7 @@ def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
         writer.close()
 
 
-def overfit_model(model, criterion, optimizer, X_train, y_train,):
+def overfit_model(model, criterion, optimizer, X_train, y_train, prediction_treshold=PREDICTION_TRESHOLD):
     train_dataset = TensorDataset(X_train, y_train)
     train_loader = DataLoader(train_dataset, 32, shuffle=True)
     X_debug, y_debug = next(iter(train_loader))
@@ -164,7 +166,7 @@ def overfit_model(model, criterion, optimizer, X_train, y_train,):
 
         # Convert outputs to probabilities and predictions
         probs = torch.sigmoid(outputs)
-        preds = (probs > 0.5).float()
+        preds = (probs > prediction_treshold).float()
 
         # Calculate metrics
         loss = criterion(outputs, y_debug)
