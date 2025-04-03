@@ -8,8 +8,11 @@ RAW_DATA_DIR = os.path.join(
 )
 
 # flake8: noqa
+SILESIAN_DECEPTION = (
+    "https://dl.acm.org/doi/10.1145/2823465.2823469"
+)
 MIAMI_DECEPTION = (
-    "https://sc.lib.miamioh.edu/bitstream/handle/2374.MIA/6067/MU3D-Package.zip?sequence=7&isAllowed=y"
+    "https://sc.lib.miamioh.edu/handle/2374.MIA/6067"
 )
 REAL_LIFE_DECEPTION_DETECTION_URL = (
     "https://web.eecs.umich.edu/~mihalcea/downloads/RealLifeDeceptionDetection.2016.zip"
@@ -19,10 +22,13 @@ RAVDESS = (
 )
 
 AVAILABLE_DATASETS = {
+    "SILESIAN_DECEPTION": SILESIAN_DECEPTION,
     "MIAMI_DECEPTION": MIAMI_DECEPTION,
     "REAL_LIFE_DECEPTION_DETECTION": REAL_LIFE_DECEPTION_DETECTION_URL,
     "RAVDESS": RAVDESS,
 }
+
+COPYRIGHTED = ["SILESIAN_DECEPTION", "MIAMI_DECEPTION"]
 
 
 @click.command()
@@ -31,6 +37,10 @@ def main(dataset):
     if dataset not in AVAILABLE_DATASETS.keys():
         print(f"Dataset {dataset} not available.")
         pprint(f"Available datasets: {list(AVAILABLE_DATASETS.keys())}")
+        return
+    
+    if dataset in COPYRIGHTED:
+        print(f"Dataset {dataset} might be copyrighted and has to be downloaded manually at {AVAILABLE_DATASETS[dataset]}.")
         return
     
     print(f"Downloading dataset {dataset}...")

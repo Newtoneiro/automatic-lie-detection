@@ -11,3 +11,6 @@ scipy==1.15.2
 supervision==0.25.1
 torch==2.5.1+cu118
 tqdm==4.66.4
+moviepy==2.1.2
+imageio==2.36.0
+imageio-ffmpeg==0.5.1
