@@ -1,5 +1,6 @@
 import torch
-from torch.utils.data import DataLoader, TensorDataset
+import numpy as np
+from torch.utils.data import DataLoader, TensorDataset, WeightedRandomSampler
 
 EPOCHS = 300
 BATCH_SIZE = 32
@@ -77,15 +78,34 @@ def train_torch_model_multiclass(model, criterion, optimizer, X_train, y_train,
 
 
 def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
-                             X_val, y_val, *, writer=None, batch_size=BATCH_SIZE,
-                             epochs=EPOCHS, prediction_treshold=PREDICTION_TRESHOLD):
+                             X_val, y_val, *, unbalanced=False, writer=None, batch_size=BATCH_SIZE,
+                             epochs=EPOCHS, prediction_treshold=PREDICTION_TRESHOLD, show_prediction_stats=False):
     model = model.to(device)
 
     train_dataset = TensorDataset(X_train, y_train)
     val_dataset = TensorDataset(X_val, y_val)
 
-    train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size, shuffle=False)
+
+    if not unbalanced:
+        train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
+    else:
+        y_train_np = y_train.numpy().astype(np.int64) if hasattr(y_train, 'numpy') else np.array(y_train)
+        class_sample_counts = np.bincount(y_train_np)
+        class_sample_counts = np.maximum(class_sample_counts, 1)
+        class_weights = 1. / class_sample_counts
+        class_weights = class_weights / np.sum(class_weights) * len(class_weights)
+        sample_weights = class_weights[y_train_np]
+        sampler = WeightedRandomSampler(
+            weights=sample_weights,
+            num_samples=len(sample_weights),
+            replacement=True
+        )
+        train_loader = DataLoader(
+            train_dataset,
+            batch_size=batch_size,
+            sampler=sampler
+        )
 
     for epoch in range(epochs):
         model.train()
@@ -99,7 +119,8 @@ def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
             # Forward pass
             outputs = model(X_batch).squeeze(dim=1)
             probs = torch.sigmoid(outputs).detach()
-            print(f"Prediction stats: Min={probs.min():.3f}, Max={probs.max():.3f}, Mean={probs.mean():.3f}")
+            if show_prediction_stats:
+                print(f"Prediction stats: Min={probs.min():.3f}, Max={probs.max():.3f}, Mean={probs.mean():.3f}")
             loss = criterion(outputs, y_batch)
 
             # Backward pass and optimization
@@ -148,9 +169,10 @@ def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
         writer.close()
 
 
-def overfit_model(model, criterion, optimizer, X_train, y_train, prediction_treshold=PREDICTION_TRESHOLD):
+def overfit_model(model, criterion, optimizer, X_train, y_train, batch_size=BATCH_SIZE,
+                  prediction_treshold=PREDICTION_TRESHOLD):
     train_dataset = TensorDataset(X_train, y_train)
-    train_loader = DataLoader(train_dataset, 32, shuffle=True)
+    train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
     X_debug, y_debug = next(iter(train_loader))
     X_debug, y_debug = X_debug.to(device), y_debug.to(device).float()
 
