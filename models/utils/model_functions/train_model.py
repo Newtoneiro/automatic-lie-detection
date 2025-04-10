@@ -19,8 +19,8 @@ def train_torch_model_multiclass(model, criterion, optimizer, X_train, y_train,
     train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size, shuffle=False)
 
+    model.train()
     for epoch in range(epochs):
-        model.train()
         train_loss = 0
         correct = 0
         total = 0
@@ -107,8 +107,8 @@ def train_torch_model_binary(model, criterion, optimizer, X_train, y_train,
             sampler=sampler
         )
 
+    model.train()
     for epoch in range(epochs):
-        model.train()
         train_loss = 0
         correct = 0
         total = 0
@@ -182,12 +182,13 @@ def overfit_model(model, criterion, optimizer, X_train, y_train, batch_size=BATC
     print(f"Input shape: {X_debug.shape}")
     print(f"Label distribution: {torch.mean(y_debug).item():.2f} (1s)")
 
+    model.train()
     for step in range(1000):
         optimizer.zero_grad()
         outputs = model(X_debug).squeeze(1)
 
         # Convert outputs to probabilities and predictions
-        probs = torch.sigmoid(outputs)
+        probs = torch.sigmoid(outputs).detach()
         preds = (probs > prediction_treshold).float()
 
         # Calculate metrics
@@ -198,8 +199,8 @@ def overfit_model(model, criterion, optimizer, X_train, y_train, batch_size=BATC
         loss.backward()
         optimizer.step()
 
-        # Print diagnostics every 100 steps
-        if step % 2 == 0 or step == 999:
+        # Print diagnostics every 10 steps
+        if step % 2 == 10 or step == 999:
             print(f"\nStep {step}:")
             print(f"Loss: {loss.item():.4f}")
             print(f"Accuracy: {acc.item():.2%}")

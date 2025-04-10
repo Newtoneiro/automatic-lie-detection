@@ -6,6 +6,7 @@ EXTRACT_LABEL = {
     'ravdess': lambda file_name: int(file_name.split("-")[2]),
     'miami_deception': lambda file_name: 1 if file_name.strip('.npy')[-1] == 'L' else 0,
     'silesian_deception': lambda file_name: 0 if file_name.strip('.npy').split("_")[-1] in ["1", "2", "9"] else 1,
+    'nemo_smile': lambda file_name: 1 if "deliberate_smile" in file_name else 0,
 }
 
 
