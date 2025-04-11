@@ -1,49 +1,41 @@
 import torch
 from torch.utils.data import DataLoader, TensorDataset
+from utils.model_functions.model_statistics import ModelStatsTracker
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 32
 
 
 def eval_torch_model_multiclass(model, criterion, X_test, y_test):
     test_dataset = TensorDataset(X_test, y_test)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
     model.eval()
-
-    test_loss = 0
-    correct = 0
-    total = 0
+    stats = ModelStatsTracker()
 
     with torch.no_grad():
         for X_batch, y_batch in test_loader:
             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-
             y_batch = y_batch.argmax(dim=1)
 
             outputs = model(X_batch)
             loss = criterion(outputs, y_batch)
 
-            test_loss += loss.item()
             _, predicted = outputs.max(1)
-            correct += predicted.eq(y_batch).sum().item()
-            total += y_batch.size(0)
 
-    test_loss /= len(y_test)
-    test_acc = correct / total
+            stats.log_val_stats(
+                predicted.cpu().numpy(), y_batch.cpu().numpy(), loss.item()
+            )
 
-    print(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_acc:.4f}")
+    stats.summary(val_only=True)
 
 
 def eval_torch_model_binary(model, criterion, X_test, y_test):
     test_dataset = TensorDataset(X_test, y_test)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
     model.eval()
-
-    test_loss = 0
-    correct = 0
-    total = 0
+    stats = ModelStatsTracker()
 
     with torch.no_grad():
         for X_batch, y_batch in test_loader:
@@ -52,12 +44,10 @@ def eval_torch_model_binary(model, criterion, X_test, y_test):
             outputs = model(X_batch).squeeze(dim=1)
             loss = criterion(outputs, y_batch)
 
-            test_loss += loss.item()
             predicted = (torch.sigmoid(outputs) > 0.5).long()
-            correct += (predicted == y_batch.long()).sum().item()
-            total += y_batch.size(0)
 
-    test_loss /= len(y_test)
-    test_acc = correct / total
+            stats.log_val_stats(
+                predicted.cpu().numpy(), y_batch.cpu().numpy(), loss.item()
+            )
 
-    print(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_acc:.4f}")
+        stats.summary(val_only=True)
