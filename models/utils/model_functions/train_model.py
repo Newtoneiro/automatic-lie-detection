@@ -92,6 +92,7 @@ def train_torch_model_binary(
     epochs=EPOCHS,
     prediction_threshold=PREDICTION_THRESHOLD,
     show_prediction_stats=False,
+    lr_scheduler=None
 ):
     model = model.to(device)
 
@@ -160,6 +161,9 @@ def train_torch_model_binary(
                 stats.log_val_stats(
                     predicted.cpu().numpy(), y_batch.cpu().numpy(), loss.item()
                 )
+
+        if lr_scheduler is not None:
+            lr_scheduler.step(stats.val_loss)
 
         stats.summary(writer)
 

@@ -12,7 +12,11 @@ def get_distances_from_reference(data, reference_points):
 
 def normalize_distances(distances):
     first_distances = distances[0, :]
-    normalized_distances = distances / first_distances[np.newaxis, :]
+    # Create a mask to avoid division by zero
+    mask = (first_distances != 0)
+    normalized_distances = np.zeros_like(distances)
+
+    normalized_distances[:, mask] = distances[:, mask] / first_distances[mask][np.newaxis, :]
 
     return normalized_distances
 

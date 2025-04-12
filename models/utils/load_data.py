@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-DATA_FOLDER_PATH = os.path.abspath(os.path.join('..', '..', 'data', 'processed'))
+DATA_FOLDER_PATH = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'data', 'processed'))
 EXTRACT_LABEL = {
     'ravdess': lambda file_name: int(file_name.split("-")[2]),
     'miami_deception': lambda file_name: 1 if file_name.strip('.npy')[-1] == 'L' else 0,

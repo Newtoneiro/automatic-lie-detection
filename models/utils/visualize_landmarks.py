@@ -2,7 +2,7 @@ import os
 import numpy as np
 from matplotlib import pyplot as plt
 
-loaded_key_points = np.load(os.path.join('..', '..', 'data', 'reference_points', 'key_points_xyz.npy'))
+loaded_key_points = np.load(os.path.join(__file__, '..', '..', '..', 'data', 'reference_points', 'key_points_xyz.npy'))
 OFFSET = 0.3
 
 
