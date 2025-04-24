@@ -45,3 +45,15 @@ i na jego podstawie zweryfikować korelacje - podczas uśmiechu odleglosc kacik�
 
 - [x] podsumowanie pracy w jednym dokumencie
 - [x] założyć w końcu overleafa
+
+
+# 17/04
+## Wnioski
+
+- Hipoteza - pomimo badań psychologicznych, ten eksperyment pokazuje że na twarzy nie da sie tego kłamstwa wykryć:
+    - osoby niezaangażowane emocjonalnie (mimika dość statyczna).
+    - dynamika twarzy być może nie być kluczowym indykatorem, mogą byc inne cechy twarzy ktore nie zostały przebadane.
+
+- spróbować selekcji cech na kłamstwie
+- uśredniony wykres z trajektorii punktów charakterystycznych dla jednej i drugiej grupy (coś jak dla emocji - pokazać że raczej nie widać różnicy)
+- (*) poczytać co się liczy, zmodyfikować pipeline do przetwarzania (na podstawie punktów charakterystycznych)

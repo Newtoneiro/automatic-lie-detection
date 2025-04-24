@@ -22,6 +22,7 @@ def train_torch_model_multiclass(
     writer=None,
     batch_size=BATCH_SIZE,
     epochs=EPOCHS,
+    lr_scheduler=None
 ):
     model = model.to(device)
 
@@ -70,6 +71,9 @@ def train_torch_model_multiclass(
                 stats.log_val_stats(
                     predicted.cpu().numpy(), y_batch.cpu().numpy(), loss.item()
                 )
+
+        if lr_scheduler is not None:
+            lr_scheduler.step(stats.val_loss)
 
         stats.summary(writer)
 
