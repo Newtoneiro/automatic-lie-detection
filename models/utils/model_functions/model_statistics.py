@@ -99,7 +99,7 @@ class ModelStatsTracker:
             print("-" * 100)
             print(f"{'VALIDATION':^100}")
             print("-" * 100)
-            print(f"{'Loss':<12}: {self.val_loss:.6f}")
+            print(f"{'Loss':<12}: {self.val_loss:.4f}")
             print(f"{'Accuracy':<12}: {self.val_acc:.4f}")
             print(f"{'Precision':<12}: {self.val_precision:.4f}")
             print(f"{'Recall':<12}: {self.val_recall:.4f}")
@@ -109,7 +109,7 @@ class ModelStatsTracker:
             print(f"{'TRAINING':^50}{'VALIDATION':^50}")
             print("-" * 100)
             print(
-                f"{'Loss':<12}: {self.train_loss:.6f}{'':36}{'Loss':<12}: {self.val_loss:.6f}"
+                f"{'Loss':<12}: {self.train_loss:.4f}{'':36}{'Loss':<12}: {self.val_loss:.4f}"
             )
             print(
                 f"{'Accuracy':<12}: {self.train_acc:.4f}{'':36}{'Accuracy':<12}: {self.val_acc:.4f}"
