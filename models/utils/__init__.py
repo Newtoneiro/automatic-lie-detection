@@ -7,4 +7,5 @@ from utils.get_selected_landmarks import get_selected_landmarks
 from utils.preprocess_data import preprocess_data
 from utils.get_class_distribution import get_class_distribution
 from utils.visualize_landmarks import visualize_landmarks
+from utils.read_todynet_logs import read_todynet_logs
 import utils.model_functions
