@@ -3,9 +3,9 @@
 from utils.get_cuda_info import get_cuda_info
 from utils.load_data import load_data
 from utils.convert_landmarks_to_distances import convert_landmarks_to_distances
+from utils.convert_landmarks_to_eye_movements import convert_landmarks_to_eye_movements
 from utils.get_selected_landmarks import get_selected_landmarks
 from utils.preprocess_data import preprocess_data
 from utils.get_class_distribution import get_class_distribution
 from utils.visualize_landmarks import visualize_landmarks
-from utils.read_todynet_logs import read_todynet_logs
 import utils.model_functions
