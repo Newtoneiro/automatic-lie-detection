@@ -6,7 +6,7 @@ from torch.nn.utils.rnn import pad_sequence
 
 TRAIN_REST_RATIO = 0.3
 VAL_TEST_RATIO = 0.5
-SEED = 42
+SEED = 123
 
 
 def preprocess_data(data: np.array, labels: np.array, binarize_labels=True) -> tuple[np.array]:
